@@ -172,6 +172,7 @@ int main(int argc, char* argv[]) {
 	INFO("Initializing app");
 	appInit();
 
+#if 0
 	// On Mac, use a hacked-in GLFW addition to get the launched path.
 #if defined ARCH_MAC
 	// For some reason, launching from the command line sets glfwGetOpenedFilenames(), so make sure we're running the app bundle.
@@ -181,6 +182,7 @@ int main(int argc, char* argv[]) {
 			patchPath = openedFilenames[0];
 		}
 	}
+#endif
 #endif
 
 	if (!settings::headless) {

@@ -1,0 +1,28 @@
+please do not put entire dep/ into .gitignore; use fine grained control per dep.
+
+use with brew:
+brew install glfw
+brew install glew
+brew install jansson
+brew install speex
+brew install speexdsp
+brew install rtmidi
+brew install fftw
+brew install libzip
+brew install zlib
+
+not found by formulae:
+rtaudio
+pffft
+osdialog
+nanovg
+nanosvg
+
+add localy:
+git submodule add https://github.com/nothings/stb dep/stb
+git submodule add https://github.com/adiog/pffft dep/pffft
+
+use with cmakelists:
+git submodule add https://github.com/adiog/nanovg dep/nanovg
+git submodule add https://github.com/adiog/osdialog dep/osdialog
+

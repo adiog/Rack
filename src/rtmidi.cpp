@@ -6,7 +6,11 @@
 #ifndef __clang__
 	#pragma GCC diagnostic ignored "-Wsuggest-override"
 #endif
+#ifndef ARCH_MAC
 #include <rtmidi/RtMidi.h>
+#else
+#include <RtMidi.h>
+#endif
 #pragma GCC diagnostic pop
 
 

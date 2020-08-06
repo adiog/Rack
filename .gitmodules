@@ -1,6 +1,6 @@
 [submodule "dep/nanovg"]
 	path = dep/nanovg
-	url = https://github.com/memononen/nanovg.git
+	url = https://github.com/adiog/nanovg.git
 	ignore = untracked
 [submodule "dep/nanosvg"]
 	path = dep/nanosvg
@@ -8,7 +8,7 @@
 	ignore = untracked
 [submodule "dep/osdialog"]
 	path = dep/osdialog
-	url = https://github.com/AndrewBelt/osdialog.git
+	url = https://github.com/adiog/osdialog.git
 	ignore = untracked
 [submodule "dep/oui-blendish"]
 	path = dep/oui-blendish
@@ -22,3 +22,9 @@
 	path = dep/glfw
 	url = https://github.com/AndrewBelt/glfw.git
 	ignore = untracked
+[submodule "dep/stb"]
+	path = dep/stb
+	url = https://github.com/nothings/stb
+[submodule "dep/pffft"]
+	path = dep/pffft
+	url = https://github.com/adiog/pffft

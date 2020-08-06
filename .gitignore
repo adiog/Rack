@@ -2,7 +2,6 @@
 /Rack.exe
 /Rack.res
 /libRack.a
-/dep
 /plugins
 /disabledplugins
 /build
@@ -12,3 +11,5 @@
 /autosave.vcv
 /settings.json
 /screenshots
+.idea/
+cmake-build-debug/
