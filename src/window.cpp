@@ -97,6 +97,7 @@ struct Window::Internal {
 	bool ignoreNextMouseDelta = false;
 	int frameSwapInterval = -1;
 	float monitorRefreshRate = 0.f;
+	float monitorRefreshInterval = 1000.0f / 60.0f;
 	float lastFrameRate = 0.f;
 };
 
@@ -254,6 +255,7 @@ Window::Window() {
 	glfwSwapInterval(1);
 	const GLFWvidmode* monitorMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 	internal->monitorRefreshRate = monitorMode->refreshRate;
+	internal->monitorRefreshInterval = 1000.0f / internal->monitorRefreshRate;
 
 	// Set window callbacks
 	glfwSetWindowSizeCallback(win, windowSizeCallback);
@@ -413,6 +415,13 @@ void Window::run() {
 		}
 
 		glfwSwapBuffers(win);
+
+		double nextFrameTime = frameTime + internal->monitorRefreshInterval / 1000.0f;
+        int sleepTime = static_cast<int>((nextFrameTime - glfwGetTime()) * 1000.0f);
+
+        if (sleepTime > 0) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+        }
 
 		frame++;
 	}

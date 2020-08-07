@@ -4,15 +4,10 @@ project(rack)
 
 set(CMAKE_CXX_STANDARD 14)
 
-
-# use brew/apt
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dep/glfw)
-
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dep/nanovg)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dep/osdialog)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dep/pffft)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dep/rtaudio)
-
 
 execute_process(
                  COMMAND
@@ -22,7 +17,6 @@ execute_process(
                  OUTPUT_VARIABLE
                      SHORT_HASH
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
-string(STRIP SHORT_HASH_SAFE ${SHORT_HASH})
 add_definitions(-DVERSION=1.dev.${SHORT_HASH})
 
 if(UNIX AND NOT APPLE)
@@ -51,11 +45,7 @@ if(WIN32)
     add_definitions(-DARCH_WIN)
 endif()
 
-
-
-#
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/glfw/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/nanosvg/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/nanovg/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/osdialog)
@@ -64,37 +54,33 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/rtaudio/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/rtaudio)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/pffft)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dep/stb)
-#
-#include_directories(/usr/include/)
 
 file(GLOB_RECURSE sources src/**.cpp)
 file(GLOB_RECURSE headers include/**.hpp)
 
 add_executable(rack ${sources} ${headers})
 
-#link_directories(/usr/lib/x86_64-linux-gnu/)
-
 target_link_libraries(rack
         GLEW
         glfw
         jansson
         curl
-#        ssl
-#        crypto
         zip
         z
         pffft
-#        /usr/lib/libnvidia-gtk2.so.418.56
         nanovg
         osdialog
         speexdsp
-#        samplerate
         rtmidi
         rtaudio
-#pthread GL dl X11 asound jack
-        )
+)
+
+if(LINUX)
+    target_link_libraries(rack GL dl)
+endif()
+
 if(APPLE)
-target_link_libraries(rack "-framework Cocoa" "-framework OpenGL" "-framework IOKit" "-framework CoreVideo" "-framework CoreAudio" "-framework CoreMIDI")
+    target_link_libraries(rack "-framework Cocoa" "-framework OpenGL" "-framework IOKit" "-framework CoreVideo" "-framework CoreAudio" "-framework CoreMIDI")
 endif()
 
 ADD_CUSTOM_TARGET(res ALL COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/res ${CMAKE_CURRENT_BINARY_DIR}/res)
